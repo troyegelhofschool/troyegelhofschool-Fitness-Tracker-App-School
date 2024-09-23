@@ -48,7 +48,7 @@ class WorkoutData extends ChangeNotifier {
   }
 
   // add an exercise to a workout
-  void AddExercise(String workoutName, String exerciseName, String weight,
+  void addExercise(String workoutName, String exerciseName, String weight,
       String reps, String sets) {
     // find the relevant workout
     Workout relevantWorkout = getRelevantWorkout(workoutName);
