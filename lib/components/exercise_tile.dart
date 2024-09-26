@@ -6,20 +6,22 @@ class ExerciseTile extends StatelessWidget {
   final String reps;
   final String sets;
   final bool isCompleted;
+  void Function(bool?)? onCheckBoxChanged;
 
-  const ExerciseTile({
+  ExerciseTile({
     super.key,
     required this.exerciseName,
     required this.weight,
     required this.reps,
     required this.sets,
     required this.isCompleted,
+    required this.onCheckBoxChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blue,
+      color: Colors.grey,
       child: ListTile(
         title: Text(
           exerciseName,
@@ -46,6 +48,10 @@ class ExerciseTile extends StatelessWidget {
               ),
             )
           ],
+        ),
+        trailing: Checkbox(
+          value: isCompleted,
+          onChanged: (value) => onCheckBoxChanged!(value),
         ),
       ),
     );
