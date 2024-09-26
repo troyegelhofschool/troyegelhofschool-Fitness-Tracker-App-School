@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           MaterialButton(
             onPressed: cancel,
             child: Text("cancel"),
-          )
+          ),
         ],
       ),
     );

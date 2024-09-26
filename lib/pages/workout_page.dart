@@ -18,6 +18,95 @@ class _WorkoutPageState extends State<WorkoutPage> {
         .checkOffExercise(workoutName, exerciseName);
   }
 
+  // text controllers
+  final exerciseNameController = TextEditingController();
+  final weightController = TextEditingController();
+  final repsController = TextEditingController();
+  final setsController = TextEditingController();
+
+  // create a new exercise
+  void createNewExercise() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Add a new exercise'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // exercise name
+            TextField(
+              controller: exerciseNameController,
+            ),
+
+            // weight
+            TextField(
+              controller: weightController,
+            ),
+
+            // reps
+            TextField(
+              controller: repsController,
+            ),
+
+            // sets
+            TextField(
+              controller: setsController,
+            ),
+          ],
+        ),
+        actions: [
+          // save buttons
+          MaterialButton(
+            onPressed: save,
+            child: Text("save"),
+          ),
+
+          // cancel button
+          MaterialButton(
+            onPressed: cancel,
+            child: Text("cancel"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // save workout
+  void save() {
+    // get exercise name from text controller
+    String newExerciseName = exerciseNameController.text;
+    String weight = weightController.text;
+    String reps = repsController.text;
+    String sets = setsController.text;
+    // add exercise to workoutdata list
+    Provider.of<WorkoutData>(context, listen: false).addExercise(
+      widget.workoutName,
+      newExerciseName,
+      weight,
+      reps,
+      sets,
+    );
+
+    // pop dialog box
+    Navigator.pop(context);
+    clear();
+  }
+
+  //cancel
+  void cancel() {
+    // pop dialog box
+    Navigator.pop(context);
+    clear();
+  }
+
+  // clear controllers
+  void clear() {
+    exerciseNameController.clear();
+    weightController.clear();
+    repsController.clear();
+    setsController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<WorkoutData>(
@@ -25,6 +114,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
         appBar: AppBar(
           title: Text(widget.workoutName),
           backgroundColor: Colors.blue,
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: createNewExercise,
+          child: Icon(Icons.add),
         ),
         body: ListView.builder(
           itemCount: value.numberOfExercisesInWorkout(widget.workoutName),
